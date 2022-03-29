@@ -35,7 +35,7 @@ func main() {
 	}
 
 	app.TemplateCache = tc
-	app.UseCache = true
+	app.UseCache = false
 
 	handlers.NewRepo(&app)
 	render.App = &app
