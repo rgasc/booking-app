@@ -1,6 +1,6 @@
-{{template "base" .}}
+{{ template "base" . }}
 
-{{define "content"}}
+{{ define "content" }}
     <div class="container">
         <div class="row justify-content-md-center">
             <div class="col-md-6">
@@ -9,19 +9,25 @@
                     <div class="row">
                         <div class="col mb-3">
                             <label for="firstName" class="form-label">First name</label>
-                            <input required type="text" class="form-control" id="firstName" name="first_name" autocomplete="off">
+                            <input required type="text" class="form-control" id="firstName" name="first_name" autocomplete="off" />
                         </div>
+                    </div>
+                    <div class="row">
                         <div class="col mb-3">
                             <label for="lastName" class="form-label">Last name</label>
-                            <input required type="text" class="form-control" id="lastName" name="last_name" autocomplete="off">
+                            <input required type="text" class="form-control" id="lastName" name="last_name" autocomplete="off" />
                         </div>
+                    </div>
+                    <div class="row">
                         <div class="col mb-3">
                             <label for="email" class="form-label">Email</label>
-                            <input required type="email" class="form-control" id="email" name="email" autocomplete="off">
+                            <input required type="email" class="form-control" id="email" name="email" autocomplete="off" />
                         </div>
+                    </div>
+                    <div class="row">
                         <div class="col mb-3">
                             <label for="phone" class="form-label">Phone number</label>
-                            <input required type="text" class="form-control" id="phone" name="phone" autocomplete="off">
+                            <input required type="text" class="form-control" id="phone" name="phone" autocomplete="off" />
                         </div>
                     </div>
                     <button type="submit" class="btn btn-primary">Make reservation</button>
@@ -29,4 +35,4 @@
             </div>
         </div>
     </div>
-{{end}}
+{{ end }}

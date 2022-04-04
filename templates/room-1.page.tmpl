@@ -1,10 +1,14 @@
-{{template "base" .}}
+{{ template "base" . }}
 
-{{define "content"}}
+{{ define "content" }}
     <div class="container">
         <div class="row">
             <div class="col text-center">
-                <img src="/static/images/generals-quarters.png" class="room-image img-fluid img-thumbnail mx-auto d-block" alt="Room image">
+                <img
+                    src="/static/images/generals-quarters.png"
+                    class="room-image img-fluid img-thumbnail mx-auto d-block"
+                    alt="Room image"
+                />
             </div>
         </div>
 
@@ -12,21 +16,43 @@
             <div class="col">
                 <h1 class="text-center mt-4">Room one page</h1>
                 <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Aenean sed metus sodales, vulputate arcu eget, suscipit
-                    nisi. Suspendisse potenti. Pellentesque semper nec tellus
-                    et efficitur. Morbi tortor purus, cursus vel vestibulum
-                    non, consectetur pulvinar justo. Curabitur nisl nisl,
-                    lacinia et sem ut, gravida euismod eros. Duis luctus dolor
-                    sem, feugiat sagittis felis malesuada ac.
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean sed metus sodales, vulputate arcu eget, suscipit nisi.
+                    Suspendisse potenti. Pellentesque semper nec tellus et efficitur. Morbi tortor purus, cursus vel vestibulum non,
+                    consectetur pulvinar justo. Curabitur nisl nisl, lacinia et sem ut, gravida euismod eros. Duis luctus dolor sem, feugiat
+                    sagittis felis malesuada ac.
                 </p>
             </div>
         </div>
 
         <div class="row">
             <div class="col text-center">
-                <a href="/reservation/room-1" class="btn btn-success">Check availability</a>
+                <a href="#!" id="check-availability" class="btn btn-success">Check availability</a>
             </div>
         </div>
     </div>
-{{end}}
+{{ end }}
+
+{{ define "js" }}
+    <script>
+        document.getElementById("check-availability").addEventListener("click", function() {
+            const modalForm = `
+                <form id="check-availability-form" action="" method="POST" class="needs-validation" novalidate>
+                    <div class="row">
+                        <div class="col">
+                            <div id="reservation-dates-modal" class="row">
+                                <div class="col">
+                                    <input disabled required type="text" class="form-control" name="start" id="start" placeholder="Arrival">
+                                </div>
+                                <div class="col">
+                                    <input disabled required type="text" class="form-control" name="end" id="end" placeholder="Departure">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            `;
+
+            attention.custom({msg: modalForm, title: "Choose your dates"});
+        });
+    </script>
+{{ end }}

@@ -1,5 +1,3 @@
-let attention = Prompt();
-
 (function () {
     "use strict";
 
@@ -23,50 +21,14 @@ let attention = Prompt();
     });
 })();
 
-const elem = document.getElementById("reservation-dates");
-const datepicker = new DateRangePicker(elem, {
-    format: "yyyy-mm-dd",
-});
+// function notify(msg, msgType) {
+//     notie.alert({
+//         type: msgType,
+//         text: msg,
+//     });
+// }
 
-function notify(msg, msgType) {
-    notie.alert({
-        type: msgType,
-        text: msg,
-    });
-}
-
-function notifyModal(title, text, icon, confirmButtonText) {
-    Swal.fire({
-        title: title,
-        text: text,
-        icon: icon,
-        confirmButtonText: confirmButtonText,
-    });
-}
-
-const html = `
-    <form id="check-availability-form" action="" method="POST" class="needs-validation" novalidate>
-        <div class="row">
-            <div class="col">
-                <div id="reservation-dates-modal" class="row">
-                    <div class="col">
-                        <input disabled required type="text" class="form-control" name="start" id="start" placeholder="Arrival">
-                    </div>
-                    <div class="col">
-                        <input disabled required type="text" class="form-control" name="end" id="end" placeholder="Departure">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </form>
-`;
-
-// notify("test!!", "success")
-// notifyModal("Title", "Text", "success", "Confirm")
-// attention.toast({msg: "Test", icon: "error"});
-// attention.success({msg: "Hello world"});
-// attention.error({msg: "Oops"});
-// attention.custom({ msg: html, title: "Choose your dates" });
+const attention = Prompt();
 
 function Prompt() {
     let toast = function (c) {

@@ -43,9 +43,14 @@ func (m *Repository) RoomTwo(w http.ResponseWriter, r *http.Request) {
 	render.RenderTemplate(w, "room-2.page.tmpl", &models.TemplateData{})
 }
 
+// Availability is the Availability page handler
+func (m *Repository) Availability(w http.ResponseWriter, r *http.Request) {
+	render.RenderTemplate(w, "search-availability.page.tmpl", &models.TemplateData{})
+}
+
 // Reservation is the reservation page handler
 func (m *Repository) Reservation(w http.ResponseWriter, r *http.Request) {
-	render.RenderTemplate(w, "reservation.page.tmpl", &models.TemplateData{})
+	render.RenderTemplate(w, "make-reservation.page.tmpl", &models.TemplateData{})
 }
 
 // Contact is the contact page handler
