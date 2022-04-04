@@ -1,26 +1,27 @@
-{{template "base" .}}
+{{ template "base" . }}
 
-{{define "content"}}
+{{ define "content" }}
     <div class="container">
         <div class="row justify-content-md-center">
             <div class="col-md-6">
                 <h1 class="mt-4">Search for availability</h1>
-                <form action="/reservation" method="GET">
-                    <div class="row">
-                        <div class="col mb-3">
-                            <label for="startDate" class="form-label">Start date</label>
-                            <input required type="date" class="form-control" id="startDate" name="start_date" aria-describedby="startDateHelp">
-                            <div id="startDateHelp" class="form-text">Enter your starting date (MM-DD-YYYY).</div>
-                        </div>
-                        <div class="col mb-3">
-                            <label for="endDate" class="form-label">End date</label>
-                            <input required type="date" class="form-control" id="endDate" name="end_date" aria-describedby="endDateHelp">
-                            <div id="endDateHelp" class="form-text">Enter your end date (MM-DD-YYYY).</div>
+                <form action="/reservation" method="GET" class="needs-validation" novalidate>
+                    <div id="reservation-dates">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="startDate" class="form-label">Start date</label>
+                                <input required class="form-control" id="startDate" name="start_date" placeholder="Arrival" />
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="endDate" class="form-label">End date</label>
+                                <input required class="form-control" id="endDate" name="end_date" placeholder="Departure" />
+                            </div>
                         </div>
                     </div>
+                    <hr />
                     <button type="submit" class="btn btn-primary">Check availability</button>
                 </form>
             </div>
         </div>
     </div>
-{{end}}
+{{ end }}

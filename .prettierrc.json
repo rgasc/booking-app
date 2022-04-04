@@ -1,0 +1,11 @@
+{
+    "overrides": [
+        {
+            "files": "templates/*.tmpl",
+            "options": {
+                "parser": "go-template",
+                "printWidth": 140
+            }
+        }
+    ]
+}
