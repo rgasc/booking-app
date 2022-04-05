@@ -7,9 +7,9 @@ import (
 	"time"
 
 	"github.com/alexedwards/scs/v2"
-	"github.com/rgasc/booking-app/pkg/config"
-	"github.com/rgasc/booking-app/pkg/handlers"
-	"github.com/rgasc/booking-app/pkg/render"
+	"github.com/rgasc/booking-app/internal/config"
+	"github.com/rgasc/booking-app/internal/handlers"
+	"github.com/rgasc/booking-app/internal/render"
 )
 
 const portNumber = ":1337"

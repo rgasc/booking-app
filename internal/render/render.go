@@ -8,19 +8,21 @@ import (
 	"net/http"
 	"path/filepath"
 
-	"github.com/rgasc/booking-app/pkg/config"
-	"github.com/rgasc/booking-app/pkg/models"
+	"github.com/justinas/nosurf"
+	"github.com/rgasc/booking-app/internal/config"
+	"github.com/rgasc/booking-app/internal/models"
 )
 
 var functions = template.FuncMap{}
 var App *config.AppConfig
 
-func AddDefaultData(td *models.TemplateData) *models.TemplateData {
+func AddDefaultData(td *models.TemplateData, r *http.Request) *models.TemplateData {
+	td.CSRFToken = nosurf.Token(r)
 	return td
 }
 
 // RenderTemplate renders templates using html/template
-func RenderTemplate(w http.ResponseWriter, tmpl string, td *models.TemplateData) {
+func RenderTemplate(w http.ResponseWriter, r *http.Request, tmpl string, td *models.TemplateData) {
 	var tc map[string]*template.Template
 	if App.UseCache {
 		tc = App.TemplateCache
@@ -30,7 +32,7 @@ func RenderTemplate(w http.ResponseWriter, tmpl string, td *models.TemplateData)
 
 	if t, ok := tc[tmpl]; ok {
 		buf := new(bytes.Buffer)
-		_ = t.Execute(buf, AddDefaultData(td))
+		_ = t.Execute(buf, AddDefaultData(td, r))
 		_, err := buf.WriteTo(w)
 		if err != nil {
 			fmt.Println("error writing template to browser", err)
