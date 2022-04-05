@@ -90,6 +90,15 @@
             <script src="https://unpkg.com/notie"></script>
             <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
             <script src="/static/js/main.js"></script>
+            {{ with .Error }}
+                <script>attention.toast({msg: "{{ . }}", icon: "error"});</script>
+            {{ end }}
+            {{ with .Flash }}
+                <script>attention.toast({msg: "{{ . }}", icon: "success"});</script>
+            {{ end }}
+            {{ with .Warning }}
+                <script>attention.toast({msg: "{{ . }}", icon: "warning"});</script>
+            {{ end }}
 
             {{ block "js" . }}{{ end }}
 

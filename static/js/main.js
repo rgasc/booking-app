@@ -25,7 +25,7 @@ const attention = Prompt();
 
 function Prompt() {
     let toast = function (c) {
-        const { msg = "", icon = "success", position = "top-end" } = c;
+        const { msg = "", icon = "", position = "top-end" } = c;
 
         const Toast = Swal.mixin({
             toast: true,
@@ -79,12 +79,6 @@ function Prompt() {
                     c.willOpen();
                 }
             },
-            // preConfirm: () => {
-            //     return [
-            //         document.getElementById("start").value,
-            //         document.getElementById("end").value,
-            //     ];
-            // },
             didOpen: () => {
                 if (c.didOpen !== undefined) {
                     c.didOpen();
@@ -109,4 +103,11 @@ function Prompt() {
         error: error,
         custom: custom,
     };
+}
+
+function notify(msg, msgType) {
+    notie.alert({
+        type: msgType,
+        text: msg,
+    });
 }

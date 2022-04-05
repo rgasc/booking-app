@@ -33,8 +33,6 @@
 {{ end }}
 
 {{ define "js" }}
-    <script>
-        const token = "{{ .CSRFToken }}";
-    </script>
+    <script>const token = "{{ .CSRFToken }}";</script>
     <script src="/static/js/check-availability.js"></script>
 {{ end }}
