@@ -8,11 +8,12 @@ import (
 
 	"github.com/rgasc/booking-app/internal/config"
 	"github.com/rgasc/booking-app/internal/forms"
+	"github.com/rgasc/booking-app/internal/helpers"
 	"github.com/rgasc/booking-app/internal/models"
 	"github.com/rgasc/booking-app/internal/render"
 )
 
-// Repo the repository used by the handlers
+// Repo is the repository used by the handlers
 var Repo *Repository
 
 // Repository is the repository type
@@ -80,8 +81,7 @@ func (m *Repository) Reservation(w http.ResponseWriter, r *http.Request) {
 func (m *Repository) PostReservation(w http.ResponseWriter, r *http.Request) {
 	err := r.ParseForm()
 	if err != nil {
-		log.Println(err)
-		return
+		helpers.ServerError(w, err)
 	}
 
 	reservation := models.Reservation{
@@ -93,7 +93,7 @@ func (m *Repository) PostReservation(w http.ResponseWriter, r *http.Request) {
 
 	form := forms.New(r.PostForm)
 	form.Required("first_name", "last_name", "email", "phone")
-	form.MinLength("first_name", 3, r)
+	form.MinLength("first_name", 3)
 	form.IsEmail("email")
 
 	if !form.Valid() {
@@ -125,7 +125,8 @@ func (m *Repository) AvailabilityJSON(w http.ResponseWriter, r *http.Request) {
 
 	out, err := json.MarshalIndent(resp, "", "     ")
 	if err != nil {
-		log.Println(err)
+		helpers.ServerError(w, err)
+		return
 	}
 
 	log.Println(string(out))
@@ -142,7 +143,7 @@ func (m *Repository) ReservationSummary(w http.ResponseWriter, r *http.Request) 
 			Data: data,
 		})
 	} else {
-		log.Println("cannot get item from session")
+		m.App.ErrorLog.Println("cannot get reservation from session")
 		m.App.Session.Put(r.Context(), "error", "Cannot get reservation from session")
 		http.Redirect(w, r, "/", http.StatusTemporaryRedirect)
 		return
