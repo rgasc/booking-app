@@ -7,10 +7,13 @@ import (
 	"net/http"
 
 	"github.com/rgasc/booking-app/internal/config"
+	"github.com/rgasc/booking-app/internal/driver"
 	"github.com/rgasc/booking-app/internal/forms"
 	"github.com/rgasc/booking-app/internal/helpers"
 	"github.com/rgasc/booking-app/internal/models"
 	"github.com/rgasc/booking-app/internal/render"
+	"github.com/rgasc/booking-app/internal/repository"
+	"github.com/rgasc/booking-app/internal/repository/dbrepo"
 )
 
 // Repo is the repository used by the handlers
@@ -19,6 +22,7 @@ var Repo *Repository
 // Repository is the repository type
 type Repository struct {
 	App *config.AppConfig
+	DB  repository.DatabaseRepo
 }
 
 type jsonResponse struct {
@@ -27,10 +31,15 @@ type jsonResponse struct {
 }
 
 // NewRepo creates a new repository
-func NewRepo(a *config.AppConfig) {
-	Repo = &Repository{
+func NewRepo(a *config.AppConfig, db *driver.DB) *Repository {
+	return &Repository{
 		App: a,
+		DB:  dbrepo.NewPostgresRepo(db.SQL, a),
 	}
+}
+
+func NewHandlers(r *Repository) {
+	Repo = r
 }
 
 // Home is the home page handler

@@ -10,6 +10,7 @@ import (
 
 	"github.com/alexedwards/scs/v2"
 	"github.com/rgasc/booking-app/internal/config"
+	"github.com/rgasc/booking-app/internal/driver"
 	"github.com/rgasc/booking-app/internal/handlers"
 	"github.com/rgasc/booking-app/internal/helpers"
 	"github.com/rgasc/booking-app/internal/models"
@@ -24,14 +25,15 @@ var infoLog *log.Logger
 var errorLog *log.Logger
 
 func main() {
-	err := run()
-
+	db, err := run()
 	if err != nil {
 		log.Fatal(err)
 		return
 	}
 
-	fmt.Println(fmt.Sprintf("Starting application on port %s", portNumber))
+	defer db.SQL.Close()
+
+	fmt.Printf("Starting application on port %s", portNumber)
 	srv := &http.Server{
 		Addr:    portNumber,
 		Handler: routes(&app),
@@ -43,7 +45,7 @@ func main() {
 	}
 }
 
-func run() error {
+func run() (*driver.DB, error) {
 	// change to true when in production
 	app.InProduction = false
 	app.UseCache = false
@@ -63,17 +65,27 @@ func run() error {
 
 	app.Session = session
 
+	// connect to database
+	log.Println("Connecting to database...")
+	db, err := driver.ConnectSQL("host=localhost port=5432 dbname=bookings user=postgres password=dbadmin123")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	log.Println("Connected to database")
+
 	tc, err := render.CreateTemplateCache()
 	if err != nil {
 		log.Fatal("can not create template cache")
-		return err
+		return nil, err
 	}
 
 	app.TemplateCache = tc
 
-	handlers.NewRepo(&app)
+	repo := handlers.NewRepo(&app, db)
+	handlers.NewHandlers(repo)
 	render.App = &app
 	helpers.NewHelpers(&app)
 
-	return nil
+	return db, nil
 }
