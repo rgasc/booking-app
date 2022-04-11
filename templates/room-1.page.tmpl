@@ -33,6 +33,9 @@
 {{ end }}
 
 {{ define "js" }}
-    <script>const token = "{{ .CSRFToken }}";</script>
+    <script>
+        const token = "{{ .CSRFToken }}";
+        const roomID = 1;
+    </script>
     <script src="/static/js/check-availability.js"></script>
 {{ end }}
