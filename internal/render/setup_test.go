@@ -36,7 +36,7 @@ func TestMain(m *testing.M) {
 
 	testApp.Session = session
 
-	App = &testApp
+	app = &testApp
 
 	os.Exit(m.Run())
 }

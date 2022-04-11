@@ -14,22 +14,26 @@ import (
 )
 
 var functions = template.FuncMap{}
-var App *config.AppConfig
+var app *config.AppConfig
 var templatePath = "./templates"
 
+func NewRenderer(a *config.AppConfig) {
+	app = a
+}
+
 func AddDefaultData(td *models.TemplateData, r *http.Request) *models.TemplateData {
-	td.Flash = App.Session.PopString(r.Context(), "flash")
-	td.Warning = App.Session.PopString(r.Context(), "warning")
-	td.Error = App.Session.PopString(r.Context(), "error")
+	td.Flash = app.Session.PopString(r.Context(), "flash")
+	td.Warning = app.Session.PopString(r.Context(), "warning")
+	td.Error = app.Session.PopString(r.Context(), "error")
 	td.CSRFToken = nosurf.Token(r)
 	return td
 }
 
 // RenderTemplate renders templates using html/template
-func RenderTemplate(w http.ResponseWriter, r *http.Request, tmpl string, td *models.TemplateData) error {
+func Template(w http.ResponseWriter, r *http.Request, tmpl string, td *models.TemplateData) error {
 	var tc map[string]*template.Template
-	if App.UseCache {
-		tc = App.TemplateCache
+	if app.UseCache {
+		tc = app.TemplateCache
 	} else {
 		tc, _ = CreateTemplateCache()
 	}
