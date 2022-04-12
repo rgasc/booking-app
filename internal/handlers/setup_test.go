@@ -8,6 +8,7 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
+	"testing"
 	"time"
 
 	"github.com/alexedwards/scs/v2"
@@ -24,7 +25,7 @@ var session *scs.SessionManager
 var templatePath = "./../../templates"
 var functions = template.FuncMap{}
 
-func getRoutes() http.Handler {
+func TestMain(m *testing.M) {
 	app.InProduction = false
 	app.UseCache = true
 
@@ -50,9 +51,14 @@ func getRoutes() http.Handler {
 
 	app.TemplateCache = tc
 
-	NewRepo(&app)
+	repo := NewTestRepo(&app)
+	NewHandlers(repo)
 	render.NewRenderer(&app)
 
+	os.Exit(m.Run())
+}
+
+func getRoutes() http.Handler {
 	mux := chi.NewRouter()
 
 	mux.Use(middleware.Recoverer)

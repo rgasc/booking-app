@@ -56,6 +56,10 @@ func TestTemplate(t *testing.T) {
 	}
 }
 
+func TestNewTemplates(t *testing.T) {
+	NewRenderer(app)
+}
+
 func TestCreateTemplateCache(t *testing.T) {
 	templatePath = "./../../templates"
 	_, err := CreateTemplateCache()
