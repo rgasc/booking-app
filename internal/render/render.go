@@ -10,6 +10,7 @@ import (
 
 	"github.com/justinas/nosurf"
 	"github.com/rgasc/booking-app/internal/config"
+	"github.com/rgasc/booking-app/internal/helpers"
 	"github.com/rgasc/booking-app/internal/models"
 )
 
@@ -26,6 +27,9 @@ func AddDefaultData(td *models.TemplateData, r *http.Request) *models.TemplateDa
 	td.Warning = app.Session.PopString(r.Context(), "warning")
 	td.Error = app.Session.PopString(r.Context(), "error")
 	td.CSRFToken = nosurf.Token(r)
+	if helpers.IsAuthenticated(r) {
+		td.IsAuthenticated = 1
+	}
 	return td
 }
 
