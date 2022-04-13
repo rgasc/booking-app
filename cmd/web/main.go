@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/gob"
-	"fmt"
 	"log"
 	"net/http"
 	"os"
@@ -32,8 +31,12 @@ func main() {
 	}
 
 	defer db.SQL.Close()
+	defer close(app.MailChan)
 
-	fmt.Printf("Starting application on port %s", portNumber)
+	log.Println("Starting mail listener...")
+	listenForMail()
+
+	log.Printf("Starting application on port %s", portNumber)
 	srv := &http.Server{
 		Addr:    portNumber,
 		Handler: routes(&app),
@@ -54,6 +57,7 @@ func run() (*driver.DB, error) {
 	errorLog = log.New(os.Stdout, "ERROR\t", log.Ldate|log.Ltime|log.Lshortfile)
 	app.InfoLog = infoLog
 	app.ErrorLog = errorLog
+	app.MailChan = make(chan models.MailData)
 
 	gob.Register(models.Reservation{})
 	gob.Register(models.User{})
