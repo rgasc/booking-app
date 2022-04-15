@@ -20,6 +20,6 @@ require (
 	github.com/jackc/pgtype v1.10.0 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/xhit/go-simple-mail v2.2.2+incompatible
-	golang.org/x/crypto v0.0.0-20220408190544-5352b0902921 // indirect
+	golang.org/x/crypto v0.0.0-20220408190544-5352b0902921
 	golang.org/x/text v0.3.7 // indirect
 )
