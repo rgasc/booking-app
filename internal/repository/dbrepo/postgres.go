@@ -111,6 +111,7 @@ func (m *postgresDBRepo) SearchAvailabilityForAllRooms(start, end time.Time) ([]
 	if err != nil {
 		return rooms, err
 	}
+	defer rows.Close()
 
 	for rows.Next() {
 		var room models.Room
@@ -219,4 +220,8 @@ func (m *postgresDBRepo) Authenticate(email, testPassword string) (int, string, 
 	}
 
 	return id, hashedPassword, nil
+}
+
+func (m *postgresDBRepo) AllReservations() ([]models.Reservation, error) {
+	return nil, nil
 }
